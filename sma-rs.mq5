@@ -1,5 +1,5 @@
 #import "sma-rs.dll"
-void sma_rs(double &sma[], const int PREV, const double &C[], const int TOTAL);
+void sma_rs(double &sma[], const int PREV, const double &C[], const int TOTAL, const int PERIOD);
 #import
 
 #property indicator_chart_window
@@ -35,7 +35,7 @@ int OnCalculate(
 	const long &VOL[],
 	const int &SP[])
 {
-	sma_rs(sma, PREV, C, TOTAL);
+	sma_rs(sma, PREV, C, TOTAL, PERIOD);
 
 	return TOTAL;
 }

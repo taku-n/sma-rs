@@ -1,6 +1,7 @@
 *.swp
 
 *.ex5
+*.dll
 
 /target
 **/*.rs.bk
