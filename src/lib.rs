@@ -5,19 +5,17 @@ use trta::TrTA;
 #[no_mangle]
 pub extern "C"
 fn sma_rs(sma: *mut c_double, prev: c_int, c: *const c_double, total: c_int, period: c_int) {
-    let latest: &[f64];
-    let close: &[f64];
-    let dst: &mut [f64];
-
-    unsafe {
-        latest = from_raw_parts(sma, prev as usize);
-        close  = from_raw_parts(c, total as usize);
-        dst    = from_raw_parts_mut(sma, total as usize);
-    }
+    let latest:  &[f64] = unsafe {from_raw_parts(sma, prev as usize)};
+    let close:   &[f64] = unsafe {from_raw_parts(c, total as usize)};
+    let dst: &mut [f64] = unsafe {from_raw_parts_mut(sma, total as usize)};
 
     let src = close.sma_re(period as usize, latest);
 
-    dst.copy_from_slice(&src);
+    if prev == 0 {
+        dst.copy_from_slice(&src);
+    } else {
+        dst[(prev - 1) as usize ..].copy_from_slice(&src[(prev - 1) as usize ..]);
+    }
 }
 
 #[cfg(test)]

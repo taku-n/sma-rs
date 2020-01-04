@@ -11,6 +11,9 @@ sma-rs.dll: target/x86_64-pc-windows-gnu/release/sma_rs.dll
 target/x86_64-pc-windows-gnu/release/sma_rs.dll: src/lib.rs
 	cargo build --release
 
+test: src/lib.rs
+	cargo test --target x86_64-unknown-linux-gnu
+
 clean:
 	-rm target/x86_64-pc-windows-gnu/debug/sma_rs.dll
 	-rm target/x86_64-pc-windows-gnu/release/sma_rs.dll
